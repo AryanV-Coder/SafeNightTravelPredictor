@@ -11,10 +11,12 @@ def load_models():
         oe = pickle.load(f)
     with open('model_training/models/onehot_encoder.pkl', 'rb') as f:
         ohe = pickle.load(f)
-    return model, oe, ohe
+    with open('model_training/models/label_encoder.pkl', 'rb') as f:
+        le = pickle.load(f)
+    return model, oe, ohe, le
 
 # Load models
-model, oe, ohe = load_models()
+model, oe, ohe, le = load_models()
 
 # Title
 st.title("🌚 Safe Night Travel Predictor 🌝")
@@ -45,12 +47,33 @@ with col6:
 with col7:
     previous_incident_area = st.selectbox("Any previous incidents in this area?", ["yes", "no"])
 
-if st.button("Anaylse Safety") :
+# Predict button
+if st.button("🔮 Predict Safety", type="primary"):
     data = pd.DataFrame(
         [[time,gender,location_familiarity,mode_of_transport,presence_of_companions,phone_battery_level,previous_incident_area]],
         columns=['Time','Gender','LocationFamiliarity','ModeOfTransport', 'PresenceOfCompanions','PhoneBatteryLevel','PreviousIncidentArea']
     )
 
+    # Encoding Binary Features using Ordinal Encoder
+    binary_features = ['LocationFamiliarity', 'PresenceOfCompanions', 'PreviousIncidentArea']
+    data[binary_features] = oe.transform(data[binary_features])
+
+    # Encoding Multi-Categorical Features using One-Hot-Encoder
+    encoded_columns = ohe.transform(data[["Gender","ModeOfTransport"]]).toarray()
+    encoded_columns = pd.DataFrame(encoded_columns,columns = ohe.get_feature_names_out())
+    data = pd.concat([data, encoded_columns], axis=1)
+    data.drop(['Gender', 'ModeOfTransport'], axis=1,inplace=True)
+
+    prediction = model.predict(data)
     
+    # Decode using label encoder
+    decoded_result = le.inverse_transform(prediction)[0]
+    
+    # Display result
+    st.markdown("---")
+    if decoded_result == "yes":
+        st.success("✅ It is SAFE to travel!")
+    else:
+        st.error("⚠️ It is NOT SAFE to travel!")
 
 

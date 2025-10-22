@@ -1,18 +1,15 @@
 import streamlit as st
-import pickle
+import joblib
 import pandas as pd
 
 # Load the saved models and encoders
 @st.cache_resource
 def load_models():
-    with open('model_training/models/tuned_logistic_model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    with open('model_training/models/ordinal_encoder.pkl', 'rb') as f:
-        oe = pickle.load(f)
-    with open('model_training/models/onehot_encoder.pkl', 'rb') as f:
-        ohe = pickle.load(f)
-    with open('model_training/models/label_encoder.pkl', 'rb') as f:
-        le = pickle.load(f)
+    model = joblib.load('model_training/models/tuned_logistic_model.pkl')
+    oe = joblib.load('model_training/models/ordinal_encoder.pkl')
+    ohe = joblib.load('model_training/models/onehot_encoder.pkl')
+    le = joblib.load('model_training/models/label_encoder.pkl')
+
     return model, oe, ohe, le
 
 # Load models
@@ -75,5 +72,3 @@ if st.button("🔮 Predict Safety", type="primary"):
         st.success("✅ It is SAFE to travel!")
     else:
         st.error("⚠️ It is NOT SAFE to travel!")
-
-

@@ -1,4 +1,4 @@
-# �🇳 Safe Travels for a Stronger India: The Night Travel Safety Predictor
+# 🇮🇳 Safe Travels for a Stronger India: The Night Travel Safety Predictor
 
 In a nation that never sleeps, ensuring the safety of every citizen is a matter of pride. This project is a tribute to the spirit of a fearless, progressive India, where technology empowers us to make smarter, safer decisions. 
 
@@ -53,7 +53,7 @@ Our model considers factors that matter most on the ground:
    streamlit run main.py
    ```
 
-## �️ Technical Snapshot
+## 🛠️  Technical Snapshot
 
 - **Language**: Python
 - **Core Libraries**: `scikit-learn`, `pandas`, `numpy`

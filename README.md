@@ -1,6 +1,6 @@
 # 🇮🇳 Safe Travels for a Stronger India: The Night Travel Safety Predictor
 
-[Live demo › https://safenighttravelpredictor.streamlit.app/]
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://safenighttravelpredictor.streamlit.app/)
 
 In a nation that never sleeps, ensuring the safety of every citizen is a matter of pride. This project is a tribute to the spirit of a fearless, progressive India, where technology empowers us to make smarter, safer decisions. 
 
